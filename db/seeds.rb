@@ -1,4 +1,4 @@
-=begin
+
 user = []
 
 10.times do
@@ -14,7 +14,7 @@ favorite = []
 10.times do
   favorite << Favorite.create!(
     favorite_restaurant_name: Faker::Restaurant.name,
-    user_id: 1
+    user_id: user.sample.id
   )
 end
 
@@ -49,10 +49,39 @@ tab = []
 10.times do
   tab << Tab.create!(
     total:Faker::Number.decimal(l_digits: 2),
-    table_id: 1
+    table_id: table.sample.id
     )
 end
+
+favorite_restaurants = []
+
+10.times do
+  favorite_restaurants << FavoriteRestaurant.create!(
+    favorite_id:favorite.sample.id,
+    restaurant_id:restaurant.sample.id
+  )
+end
+
+reservations = []
+=begin
+10.times do
+  reservations << Reservation.create!(
+    user_id:user.sample.id,
+    restaurant_id:restaurant.sample.id,
+    table_id:table.sample.id
+  )
+end
 =end
+tab_dishes = []
+
+10.times do
+  tab_dishes << TabDish.create!(
+    tab_id:tab.sample.id,
+    dish_id:dish.sample.id
+  )
+end
+
+
 
 
 

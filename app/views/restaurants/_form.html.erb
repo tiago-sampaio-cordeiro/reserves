@@ -1,0 +1,17 @@
+<h1>Novo Restaurant</h1>
+
+<%= form_with model: @restaurant, url: '/restaurants', local: true do |form| %>
+  <div class="field">
+    <%= form.label :name, 'Nome do restaurante' %>
+    <%= form.text_field :restaurant_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price, 'endereço' %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Salvar' %>
+  </div>
+<% end %>

@@ -1,13 +1,11 @@
 class DishesController < ApplicationController
 
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_dish, only: %i[show edit update destroy]
   def index
-    @dishes = Dish.all
-    render json: @dishes
+    @dishes = Dish.order(id: :asc)
   end
 
   def show
-    render json: @dish
   end
 
   def new
@@ -16,8 +14,8 @@ class DishesController < ApplicationController
 
   def create
     @dish = Dish.new(dish_params)
-    if @dish.!
-      redirect_to @dish
+    if @dish.save
+      render json: @dish, status: :created
     else
       render json: @dish.errors, status: :unprocessable_entity
     end
@@ -27,12 +25,20 @@ class DishesController < ApplicationController
   end
 
   def update
+    if @dish.update(dish_params)
+      render json: @dish , status: :ok
+    else
+      render json: @dish.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
+   @dish.destroy!
+   head :no_content
   end
 
-  def set_user
+  private
+  def set_dish
     @dish = Dish.find(params[:id])
   end
   def dish_params
