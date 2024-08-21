@@ -26,9 +26,12 @@ RSpec.describe UsersController, type: :controller do
     context "creating the new user" do
       it "checking number of users" do
         expect {
-          post :create, params: { user: { name: "divonei",
-                                          email: "divonei@email.com",
-                                          phone: 12345}
+          post :create, params: {
+             user: {
+               name: "divonei",
+               email: "divonei@email.com",
+               phone: 12345
+              }
           }
         }.to change(User, :count).by(1)
       end
@@ -41,6 +44,7 @@ RSpec.describe UsersController, type: :controller do
         expect{
           delete :destroy, params: { id: User.last.id }
         }.to change(User, :count).by(-1)
+        # ESTRELINHA DADA☆
       end
     end
   end

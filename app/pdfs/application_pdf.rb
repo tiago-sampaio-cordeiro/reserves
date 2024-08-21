@@ -75,7 +75,7 @@ class ApplicationPdf
         end
   
         row(0).style(
-          font: "cinzel",
+          font: "Roboto",
           font_style: :bold,
           text_color: "F2F7FE",
           border_color: "3A1313",
