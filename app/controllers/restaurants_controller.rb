@@ -22,12 +22,18 @@ class RestaurantsController < ApplicationController
   end
 
   def show
+    @restaurant = restaurant.new
   end
 
   def edit
   end
 
   def update
+    if @restaurant.update(user_params)
+      render json: @restaurant , status: :ok
+    else
+      render json: @restaurant.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_09_225419) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_31_172650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,33 +19,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_225419) do
     t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "favorite_restaurants", force: :cascade do |t|
-    t.bigint "favorite_id", null: false
-    t.bigint "restaurant_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["favorite_id"], name: "index_favorite_restaurants_on_favorite_id"
-    t.index ["restaurant_id"], name: "index_favorite_restaurants_on_restaurant_id"
+    t.bigint "restaurant_id"
+    t.index ["restaurant_id"], name: "index_dishes_on_restaurant_id"
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.string "favorite_restaurant_name"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "restaurant_id", null: false
+    t.index ["restaurant_id"], name: "index_favorites_on_restaurant_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "reservations", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "restaurant_id", null: false
-    t.bigint "table_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_reservations_on_restaurant_id"
-    t.index ["table_id"], name: "index_reservations_on_table_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
@@ -56,19 +48,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_225419) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tab_dishes", force: :cascade do |t|
-    t.bigint "tab_id", null: false
-    t.bigint "dish_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dish_id"], name: "index_tab_dishes_on_dish_id"
-    t.index ["tab_id"], name: "index_tab_dishes_on_tab_id"
-  end
-
   create_table "tables", force: :cascade do |t|
     t.integer "number_table"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "restaurant_id", null: false
+    t.index ["restaurant_id"], name: "index_tables_on_restaurant_id"
   end
 
   create_table "tabs", force: :cascade do |t|
@@ -76,6 +61,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_225419) do
     t.bigint "table_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "dish_id"
+    t.index ["dish_id"], name: "index_tabs_on_dish_id"
     t.index ["table_id"], name: "index_tabs_on_table_id"
   end
 
@@ -87,13 +74,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_09_225419) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "favorite_restaurants", "favorites"
-  add_foreign_key "favorite_restaurants", "restaurants"
+  add_foreign_key "dishes", "restaurants"
+  add_foreign_key "favorites", "restaurants"
   add_foreign_key "favorites", "users"
   add_foreign_key "reservations", "restaurants"
-  add_foreign_key "reservations", "tables"
   add_foreign_key "reservations", "users"
-  add_foreign_key "tab_dishes", "dishes"
-  add_foreign_key "tab_dishes", "tabs"
+  add_foreign_key "tables", "restaurants"
+  add_foreign_key "tabs", "dishes"
   add_foreign_key "tabs", "tables"
 end

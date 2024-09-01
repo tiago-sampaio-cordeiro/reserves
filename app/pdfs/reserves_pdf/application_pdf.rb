@@ -15,10 +15,10 @@ class ApplicationPdf
       })
   
       font_families.update('Roboto' => {
-        :black => Rails.root.join('app/assets/fonts/Roboto/Roboto-Black.ttf'),
+        :bold => Rails.root.join('app/assets/fonts/Roboto/Roboto-Black.ttf'),
         :italic => Rails.root.join('app/assets/fonts/Roboto/Roboto-Italic.ttf'),
         :bold_italic => Rails.root.join('app/assets/fonts/Roboto/Roboto-BoldItalic.ttf'),
-        :light => Rails.root.join('app/assets/fonts/Roboto/Roboto-Light.ttf')
+        :normal => Rails.root.join('app/assets/fonts/Roboto/Roboto-Light.ttf')
       })
   
       font_families.update('symbol' => {
@@ -47,7 +47,7 @@ class ApplicationPdf
     end
   
     def write_title(title)
-      font_size(27) { text title, align: :center, style: :bold }
+      font_size(27) { text title, align: :center, style: :italic }
     end
   
     def write_body
@@ -76,10 +76,11 @@ class ApplicationPdf
   
         row(0).style(
           font: "Roboto",
-          font_style: :bold,
+          font_style: :italic,
+          text_align: :left,
           text_color: "F2F7FE",
           border_color: "3A1313",
-          background_color: "8E0000",
+          background_color: "2a2344",
           size: 14,
           overflow: :shrink_to_fit,
           single_line: true
